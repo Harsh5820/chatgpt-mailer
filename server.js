@@ -62,7 +62,7 @@ const text = [
   '',
   'I hope you are doing well.',
   '',
-  `My name is ${senderName}, and I am currently working at Jio Platforms Limited with over 2 years of experience in software development. I am reaching out to express my interest in Software Engineer opportunities at your organization.`,
+  `My name is ${senderName}, and I am currently working at Jio Platforms Limited with over 2 years of experience. I am reaching out to express my interest in Software Engineer opportunities at your organization.`,
   '',
   'I have hands-on experience in building scalable applications and working across the full development lifecycle.',
   '',
