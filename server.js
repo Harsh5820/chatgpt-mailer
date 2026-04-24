@@ -6,7 +6,7 @@ require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 3000;
-const resumePath = process.env.RESUME_FILE_PATH || path.join(__dirname, 'assets', 'resume.pdf');
+const resumePath = path.join(__dirname, 'assets', 'Resume.pdf');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
