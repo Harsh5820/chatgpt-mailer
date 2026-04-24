@@ -56,24 +56,58 @@ function composeMessage({ email }) {
   const company = process.env.GREETING_NAME || 'Recruiter';
 
   const subject = `Application for ${position} - ${senderName}`;
-  const text = [
-    `Hi ${company},`,
-    '',
-    `I hope you are doing well. I am ${senderName}, and I am interested in opportunities at your company.`,
-    'I have attached my resume for your review.',
-    '',
-    'Thank you for your time.',
-    `${senderName}`,
-  ].join('\n');
 
-  const html = `
-    <p>Hi ${company},</p>
-    <p>I hope you are doing well. I am ${senderName}, and I am interested in opportunities at your company.</p>
-    <p>I have attached my resume for your review.</p>
-    <p>Thank you for your time.<br/>${senderName}</p>
-    <hr/>
-    <p style="color:#666;font-size:12px;">Sent to: ${email}</p>
-  `;
+const text = [
+  `Hi ${company},`,
+  '',
+  'I hope you are doing well.',
+  '',
+  `My name is ${senderName}, and I am currently working at Jio Platforms Limited with over 2 years of experience in software development. I am reaching out to express my interest in Software Engineer opportunities at your organization.`,
+  '',
+  'I have hands-on experience in building scalable applications and working across the full development lifecycle.',
+  '',
+  'Please find my resume attached for your review. I would appreciate the opportunity to discuss how my profile aligns with your requirements.',
+  '',
+  'LinkedIn: www.linkedin.com/in/harsh-dubey-584a781a9',
+  'GitHub: https://github.com/Harsh5820',
+  'Contact: 9321628051 / 8461876435',
+  '',
+  'Looking forward to your response.',
+  '',
+  `${senderName}`,
+].join('\n');
+
+const html = `
+  <p>Hi ${company},</p>
+  <p>I hope you are doing well.</p>
+
+  <p>
+    My name is <b>${senderName}</b>, and I am currently working at Jio Platforms Limited with over 2 years of experience in software development.
+    I am reaching out to express my interest in <b>Software Engineer</b> opportunities at your organization.
+  </p>
+
+  <p>
+    I have hands-on experience in building scalable applications and working across the full development lifecycle.
+  </p>
+
+  <p>
+    Please find my resume attached for your review. I would appreciate the opportunity to discuss how my profile aligns with your requirements.
+  </p>
+
+  <p>
+    <b>LinkedIn:</b> <a href="https://www.linkedin.com/in/harsh-dubey-584a781a9">Profile</a><br/>
+    <b>GitHub:</b> <a href="https://github.com/Harsh5820">Harsh5820</a><br/>
+    <b>Contact:</b> 9321628051 / 8461876435
+  </p>
+
+  <p>
+    Looking forward to your response.<br/>
+    ${senderName}
+  </p>
+
+  <hr/>
+  <p style="color:#666;font-size:12px;">Sent to: ${email}</p>
+`;
 
   return {
     from: process.env.MAIL_FROM || process.env.SMTP_USER,
