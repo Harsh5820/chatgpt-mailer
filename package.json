@@ -1,0 +1,23 @@
+{
+  "name": "chatgpt-mailer",
+  "version": "1.0.0",
+  "description": "Express app to send personalized resume emails to recruiters",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "express",
+    "nodemailer",
+    "vercel",
+    "email"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "nodemailer": "^6.10.1"
+  }
+}
