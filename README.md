@@ -13,7 +13,6 @@ Single-page Express app to send your resume PDF to comma-separated recruiter ema
 
 - Email-only single-page form.
 - Sends one message per recipient.
-- If one recipient fails, it is skipped and processing continues for the remaining recipients.
 - 30-45 second delay between recipients.
 - Uses Nodemailer SMTP credentials from env vars.
 
@@ -52,4 +51,3 @@ Open `http://localhost:3000`.
 `POST /send-mails` with JSON or URL-encoded body:
 
 - `recruiterEmails` (required, comma separated)
-- Response includes `sent` and `failed` arrays; failures do not stop the loop.

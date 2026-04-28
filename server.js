@@ -6,7 +6,7 @@ require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 3000;
-const resumePath = process.env.RESUME_FILE_PATH || path.join(__dirname, 'assets', 'resume.pdf');
+const resumePath = path.join(__dirname, 'assets', 'Resume.pdf');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -56,24 +56,58 @@ function composeMessage({ email }) {
   const company = process.env.GREETING_NAME || 'Recruiter';
 
   const subject = `Application for ${position} - ${senderName}`;
-  const text = [
-    `Hi ${company},`,
-    '',
-    `I hope you are doing well. I am ${senderName}, and I am interested in opportunities at your company.`,
-    'I have attached my resume for your review.',
-    '',
-    'Thank you for your time.',
-    `${senderName}`,
-  ].join('\n');
 
-  const html = `
-    <p>Hi ${company},</p>
-    <p>I hope you are doing well. I am ${senderName}, and I am interested in opportunities at your company.</p>
-    <p>I have attached my resume for your review.</p>
-    <p>Thank you for your time.<br/>${senderName}</p>
-    <hr/>
-    <p style="color:#666;font-size:12px;">Sent to: ${email}</p>
-  `;
+const text = [
+  `Hi ${company},`,
+  '',
+  'I hope you are doing well.',
+  '',
+  `My name is ${senderName}, and I am currently working at Jio Platforms Limited with over 2 years of experience. I am reaching out to express my interest in Software Engineer opportunities at your organization.`,
+  '',
+  'I have hands-on experience in building scalable applications and working across the full development lifecycle.',
+  '',
+  'Please find my resume attached for your review. I would appreciate the opportunity to discuss how my profile aligns with your requirements.',
+  '',
+  'LinkedIn: www.linkedin.com/in/harsh-dubey-584a781a9',
+  'GitHub: https://github.com/Harsh5820',
+  'Contact: 9321628051 / 8461876435',
+  '',
+  'Looking forward to your response.',
+  '',
+  `${senderName}`,
+].join('\n');
+
+const html = `
+  <p>Hi ${company},</p>
+  <p>I hope you are doing well.</p>
+
+  <p>
+    My name is <b>${senderName}</b>, and I am currently working at Jio Platforms Limited with over 2 years of experience in software development.
+    I am reaching out to express my interest in <b>Software Engineer</b> opportunities at your organization.
+  </p>
+
+  <p>
+    I have hands-on experience in building scalable applications and working across the full development lifecycle.
+  </p>
+
+  <p>
+    Please find my resume attached for your review. I would appreciate the opportunity to discuss how my profile aligns with your requirements.
+  </p>
+
+  <p>
+    <b>LinkedIn:</b> <a href="https://www.linkedin.com/in/harsh-dubey-584a781a9">Profile</a><br/>
+    <b>GitHub:</b> <a href="https://github.com/Harsh5820">Harsh5820</a><br/>
+    <b>Contact:</b> 9321628051 / 8461876435
+  </p>
+
+  <p>
+    Looking forward to your response.<br/>
+    ${senderName}
+  </p>
+
+  <hr/>
+  <p style="color:#666;font-size:12px;">Sent to: ${email}</p>
+`;
 
   return {
     from: process.env.MAIL_FROM || process.env.SMTP_USER,
@@ -129,17 +163,12 @@ app.post('/send-mails', async (req, res) => {
     });
   }
 
-  const sent = [];
-  const failed = [];
+  const results = [];
 
   try {
     for (const [index, email] of recipients.entries()) {
-      try {
-        const info = await transporter.sendMail(composeMessage({ email }));
-        sent.push({ email, messageId: info.messageId, accepted: info.accepted });
-      } catch (error) {
-        failed.push({ email, error: error.message });
-      }
+      const info = await transporter.sendMail(composeMessage({ email }));
+      results.push({ email, messageId: info.messageId, accepted: info.accepted });
 
       if (index < recipients.length - 1) {
         const delayMs = 30000 + Math.floor(Math.random() * 15000);
@@ -147,17 +176,10 @@ app.post('/send-mails', async (req, res) => {
       }
     }
 
-    const statusCode = failed.length === 0 ? 200 : 207;
-    res.status(statusCode).json({
-      message:
-        failed.length === 0
-          ? 'Emails sent successfully.'
-          : 'Processing completed. Some emails failed but remaining recipients were processed.',
-      totalRecipients: recipients.length,
-      sentCount: sent.length,
-      failedCount: failed.length,
-      sent,
-      failed,
+    res.json({
+      message: 'Emails sent successfully.',
+      sentCount: results.length,
+      results,
       resumePath,
       antiSpamChecklist: [
         'Configure SPF for your sending domain.',
@@ -166,6 +188,8 @@ app.post('/send-mails', async (req, res) => {
         'Keep volume low and personalized (already applied).',
       ],
     });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to send one or more emails.', detail: error.message, results });
   } finally {
     if (transporter) {
       transporter.close();
