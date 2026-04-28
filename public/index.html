@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recruiter Mailer</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Recruiter Mailer</h1>
+      <p class="subtitle">Paste comma-separated recruiter emails and send using resume file from repository.</p>
+
+      <form id="mailerForm">
+        <label for="recruiterEmails">Recruiter Emails (comma separated)</label>
+        <textarea
+          id="recruiterEmails"
+          name="recruiterEmails"
+          rows="6"
+          placeholder="a@company.com, b@company.com"
+          required
+        ></textarea>
+
+        <button type="submit">Send Emails</button>
+      </form>
+
+      <section class="note">
+        <h2>Serverless-safe approach</h2>
+        <ul>
+          <li>No local upload/temp file storage required.</li>
+          <li>Resume is read directly from repository path: <code>assets/resume.pdf</code>.</li>
+          <li>Sends one-by-one with delay to reduce bulk spam signals.</li>
+        </ul>
+      </section>
+
+      <pre id="result"></pre>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
