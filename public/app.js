@@ -10,7 +10,7 @@ form.addEventListener('submit', async (event) => {
   try {
     const recruiterEmails = document.getElementById('recruiterEmails').value;
 
-    const response = await fetch('/send-mails', {
+    const response = await fetch('/send-mails',  {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ recruiterEmails }),
